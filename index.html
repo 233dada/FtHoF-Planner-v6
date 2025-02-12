@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
 
 
-    <title>FtHoF Planner v6</title>
+    <title>FtHoF Planner v6 CN</title>
 </head>
 <body>
 <md-toolbar>
@@ -31,17 +31,18 @@
     <div class="content">
         <div layout="row">
             <md-input-container flex>
-                <label>Save Code/Seed</label>
+                <label>存档 代码/种子</label>
                 <input onClick="this.select();" ng-model="save_string" style="color: grey;">
             </md-input-container>
-            <md-button class="md-raised md-primary" ng-click="load_game()">Import Save or Seed</md-button>
+            <md-button class="md-raised md-primary" ng-click="load_game()">导入存档或种子</md-button>
         </div>
 
-        <p></p><b>Based on FtHoF planner v1, v2, v3, v4, and v5 by RebelKeithy, Skeezy, Eminenti, Mylaaan, and Joseph. Huge thanks to them for
-        creating such a helpful (and moddable) tool!</br>
-        The current version is compatible with cookie clicker 2.052, "often imitated, never duplicated". You can find combo data in the console logs!
+        <p></p><b>本网页由<a href="https://github.com/plasma4/FtHoF-Planner-v6">plasma4的FtHoF-Planner-v6</a>翻译而成,
+            基于<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2685716441&searchtext=%E4%B8%AD%E6%96%87">简体中文补全模组</a>,
+            内容可能有误, 请以<a href="https://plasma4.github.io/FtHoF-Planner-v6/">原版</a>为准, 本网页因更习惯于母语而汉化, 不保证翻译质量!</br>
+        当前版本兼容Cookie Cliker 2.052
         <br>
-        <md-button class="md-raised md-primary" ng-click="collapse_interface(1)">Version History</md-button></b></p>
+        <md-button class="md-raised md-primary" ng-click="collapse_interface(1)">历史版本消息</md-button></b></p>
         <div class="collapse-content" id="content-1">
             <ul>
                 <li><a href="http://fthof-planner.s3-website.us-east-2.amazonaws.com/">FtHoF planner V1</a> by
@@ -98,18 +99,20 @@
                 </li>
 
                 <md-divider style="margin: 1em 0;"></md-divider>
-                <li>For feature requests or bug reports, tell me on the Dashnet Forums Discord server.
+                <li>如果有任何问题或bug, 请确保它在原作者的网站存在同时能够复现, 否则请不要联系原作者
                 </li>
-                <li>If you make a bug report, please add the save export. This makes it easier to visualise
-                    the problem you're facing and I can make sure it is fixed instead of almost being sure.
+                <li>如果你打算提交bug报告, 请附带上导出的存档文件, 这将有助于问题的定位和修复.
+                </li>
+                <li>If you have different to this page, please contact me via <a href="https://github.com/233dada/FtHoF-Planner-v6">Github</a> to delete it.
+                    (如对本网页有异议, 请通过<a href="https://github.com/233dada/FtHoF-Planner-v6">Github</a>联系我进行删除)
                 </li>
                 </li>
             </ul>
         </div>
-        <md-button class="md-raised md-primary" ng-click="collapse_interface(2)">Guide</md-button>
+        <md-button class="md-raised md-primary" ng-click="collapse_interface(2)">指南</md-button>
         </p>
         <div class="collapse-content" id="content-2">
-            Guide from RebelKeithy, Skeezy, Mylaaan, and Joseph:
+            来自 RebelKeithy, Skeezy, Mylaaan, and Joseph 的指南:
             <ul>
                 <pre>RebelKeithy</pre>
 
@@ -242,18 +245,18 @@
 
         <ul ng-if="combos">
             <li class="combo-listitem" ng-repeat="combo in combos">
-                <b>{{$index + min_combo_length}}x Combo</b>
+                <b>{{$index + min_combo_length}}连击</b>
                 <ul ng-if="combo.shortest.idx == -1">
-                    <li>No combo of this length</li>
+                    <li>在当前检查长度下没有连击</li>
                 </ul>
                 <ul ng-if="combo.shortest.idx != -1">
-                    <li ng-if="combo.first.idx != -1"><a href="#{{combo.first.idx}}">Earliest:</a> Length
-                        {{combo.first.length}}; spread {{combo.first.length - ($index + min_combo_length)}}; starting at
-                        <a href="#{{combo.first.idx}}">spell #{{combo.first.idx+1}}</a></li>
-                    <li ng-if="combo.first.idx == -1">No combo of this length with spread below {{max_spread+1}}</li>
-                    <li><a href="#{{combo.shortest.idx}}">Shortest:</a> Length {{combo.shortest.length}}; spread
-                        {{combo.shortest.length - ($index + min_combo_length)}}; starting at <a
-                                href="#{{combo.shortest.idx}}">spell #{{combo.shortest.idx+1}}</a></li>
+                    <li ng-if="combo.first.idx != -1"><a href="#{{combo.first.idx}}">最早发现的:</a> 长度
+                        {{combo.first.length}}; 连击间隔 {{combo.first.length - ($index + min_combo_length)}}; 开始自
+                        <a href="#{{combo.first.idx}}">法术{{combo.first.idx+1}}号</a></li>
+                    <li ng-if="combo.first.idx == -1">在当前搜寻长度下没有连击间隔低于{{max_spread+1}}的连击</li>
+                    <li><a href="#{{combo.shortest.idx}}">间隔最短的:</a> 长度 {{combo.shortest.length}}; 连击间隔
+                        {{combo.shortest.length - ($index + min_combo_length)}}; 开始自 <a
+                                href="#{{combo.shortest.idx}}">法术{{combo.shortest.idx+1}}号</a></li>
                 </ul>
             </li>
         </ul>
@@ -261,65 +264,65 @@
         <md-divider></md-divider>
         <br>
         <md-checkbox ng-model="dark_mode" checkd>
-            Dark Mode
+            夜间模式
         </md-checkbox>
         <md-checkbox ng-model="default_font" checked>
-            Default Font
+            默认字体
         </md-checkbox>
         <br>
-        <b>Options:</b>
+        <b>选项:</b>
         <br>
-        <label>Lookahead Length <input type="number" ng-model="lookahead" min=10 max=1000></label>
+        <label>往前查询的长度<input type="number" ng-model="lookahead" min=10 max=1000></label>
 
-        <label>Min Combo <input type="number" ng-model="min_combo_length" min=1 max=20></label>
+        <label>最小连击数<input type="number" ng-model="min_combo_length" min=1 max=20></label>
 
-        <label>Max Combo <input type="number" ng-model="max_combo_length" min=1 max=20></label>
+        <label>最大连击数<input type="number" ng-model="max_combo_length" min=1 max=20></label>
 
-        <label>Max Spread <input type="number" ng-model="max_spread" min=0 max=99></label>
+        <label>最大连击间隔<input type="number" ng-model="max_spread" min=0 max=99></label>
         <br>
-        <b>(These two options are only used for GFD)</b>
-        <label>Current Mana <input type="number" ng-model="magic" min=0 max=1000></label>
-        <label>Maximum Mana <input type="number" ng-model="max_magic" min=0 max=1000></label>
+        <b>(这两个选项仅对GFD生效)</b>
+        <label>当前魔能值<input type="number" ng-model="magic" min=0 max=1000></label>
+        <label>最大魔能值<input type="number" ng-model="max_magic" min=0 max=1000></label>
 
         <md-divider></md-divider>
         <br>
         <md-checkbox ng-checked=true ng-model="include_ef_in_sequence" aria-label="Include Elder Frenzy">
-            Include Elder Frenzies
+            包括长者狂热
         </md-checkbox>
 
         <md-checkbox ng-checked=true ng-model="skip_abominations" aria-label="Allow Abomination Skips">
-            Skip Abominations
+            跳过憎恶
         </md-checkbox>
 
         <md-checkbox ng-checked=true ng-model="skip_edifices" aria-label="Allow Spontaneous Edifice Skips">
-            Skip Spontaneous Edifices
+            跳过自发大厦(万丈高楼平地起)
         </md-checkbox>
 
         <md-checkbox ng-model="change_icons" aria-label="Change Icons">
-            Combo-focused Icons
+            连击焦点图标
         </md-checkbox>
 
         <md-divider></md-divider>
 
-        <label>Golden+Wrath Cookies on screen <input type="number" ng-model="on_screen_cookies" min=0 max=10></label>
+        <label>屏幕中的黄金+愤怒饼干数量<input type="number" ng-model="on_screen_cookies" min=0 max=10></label>
 
         <md-checkbox class="c2" ng-model="dragonflight" aria-label="Dragonflight Buff Active">
-            Dragonflight Buff Active
+            Dragonflight效果激活
         </md-checkbox>
 
         <md-checkbox class="c2" ng-model="supremeintellect" aria-label="Supreme Intellect Aura Active">
-            Supreme Intellect Aura Active
+            Supreme Intellect Aura 激活
         </md-checkbox>
 
         <md-checkbox class="c2" ng-model="diminishineptitude" aria-label="Diminish Ineptitude Active">
-            Diminish Ineptitude Active
+            Diminish Ineptitude 激活
         </md-checkbox>
 
 
         <md-divider></md-divider>
 
-        <md-button class="md-raised md-primary" ng-click="update_cookies()">Apply Settings</md-button>
-        <md-button class="md-raised md-primary" ng-click="cast_spell()">Cast Spell</md-button>
+        <md-button class="md-raised md-primary" ng-click="update_cookies()">应用设置</md-button>
+        <md-button class="md-raised md-primary" ng-click="cast_spell()">施法</md-button>
 
         <md-divider></md-divider>
 
@@ -328,12 +331,12 @@
             <div flex-gt-sm="15" flex>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <h1>Spell #</h1>
+                        <h1>法术序号</h1>
                     </div>
                 </md-toolbar>
                 <md-content>
                     <md-list flex>
-                        <md-subheader class="md-no-sticky">Relative to now (This ascension | All time)</md-subheader>
+                        <md-subheader class="md-no-sticky">相较于当前法术序号<br>(此次飞升 | 所有时间)</md-subheader>
                         <md-list-item class="md-2-line" ng-repeat="cookie_list in cookies" ng-click="null">
                             <div class="md-list-item-text" layout="column">
                                 <a name="{{$index}}"></a>
@@ -348,12 +351,12 @@
 			<div flex-gt-sm="15" flex>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <h1>Random Seed</h1>
+                        <h1>随机种子</h1>
                     </div>
                 </md-toolbar>
                 <md-content>
                     <md-list flex>
-                        <md-subheader class="md-no-sticky">Used to determine spell backfires and GFD spells.</md-subheader>
+                        <md-subheader class="md-no-sticky">用于确定法术适得其反以及GFD法术</md-subheader>
                         <md-list-item class="md-2-line" ng-repeat="cookie_list in cookies" ng-click="null">
                             <div class="md-list-item-text" layout="column">
                                 <a name="{{$index}}"></a>
@@ -367,12 +370,12 @@
             <div flex-gt-sm="30" flex>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <h1>No Change</h1>
+                        <h1>无变化</h1>
                     </div>
                 </md-toolbar>
                 <md-content>
                     <md-list flex>
-                        <md-subheader class="md-no-sticky">Season is not Easter or Valentines.</md-subheader>
+                        <md-subheader class="md-no-sticky">节日不是万圣节或者情人节</md-subheader>
                         <md-list-item class="md-2-line" ng-repeat="cookie_list in displayCookies" ng-click="null" title="{{cookie_list[0].description}}">
                             <img ng-src='{{cookie_list[0].icon}}'
                                  class="md-avatar" alt="Golden Cookie"/>
@@ -388,18 +391,18 @@
             <div style="display: block;" id="content-3" flex-gt-sm="30" flex>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <h1>One Change</h1>
+                        <h1>有变化</h1>
                         <div style="flex-grow: 1;"></div>
                         <div class="hide-column">
                             <!--Sadly not possible to look clean with md-checkbox as it doesn't resize.-->
                             <input type="checkbox" id="show" ng-click="collapse_interface(3)" checked=true>
-                            <label for="show">Show</label>
+                            <label for="show">展示</label>
                         </div>
                     </div>
                 </md-toolbar>
                 <md-content>
                     <md-list flex>
-                        <md-subheader class="md-no-sticky">Season is Easter or Valentines.</md-subheader>
+                        <md-subheader class="md-no-sticky">节日是万圣节或者情人节</md-subheader>
                         <md-list-item class="md-2-line" ng-repeat="cookie_list in displayCookies" ng-click="null" title="{{cookie_list[1].description}}">
                             <img ng-src='{{cookie_list[1].icon}}'
                                  class="md-avatar" alt="Golden Cookie"/>
@@ -415,12 +418,12 @@
             <div flex-gt-sm="30" flex>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <span>Gambler's Dream</span>
+                        <span>魔法书之梦</span>
                     </div>
                 </md-toolbar>
                 <md-content>
                     <md-list flex>
-                        <md-subheader class="md-no-sticky">The outcome of Gambler's Fever Dream.</md-subheader>
+                        <md-subheader class="md-no-sticky">魔法书发烧梦的结果</md-subheader>
                         <md-list-item class="md-2-line" ng-init="hoverText = cookie_list[2].type" ng-mouseover="hoverText = cookie_list[2].hover" ng-click="hoverText = cookie_list[2].hover" ng-mouseleave="hoverText = cookie_list[2] ? cookie_list[2].type : 'Blank'" ng-repeat="cookie_list in displayCookies" ng-click="null">
                             <img ng-src='{{cookie_list[2].icon}}' class="md-avatar md-pixelated" alt="Golden Cookie"/>
                             <div class="md-list-item-text{{(cookie_list[2].hasBs || cookie_list[2].hasEf) ? ' highlightCombo' : cookie_list[2].type == 'Resurrect Abomination' || (cookie_list[2].type == 'Spontaneous Edifice' && !cookie_list[2].backfire) ? ' highlightSkip' : ''}}" layout="column">
@@ -431,7 +434,7 @@
                 </md-content>
             </div>
         </div>
-        <md-button class="md-raised md-primary" ng-click="load_more()">Load More</md-button>
+        <md-button class="md-raised md-primary" ng-click="load_more()">加载更多</md-button>
     </div>
 </div>
 </body>
