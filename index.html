@@ -40,7 +40,8 @@
         <p></p><b>本网页由<a href="https://github.com/plasma4/FtHoF-Planner-v6">plasma4的FtHoF-Planner-v6</a>翻译而成,
             基于<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2685716441&searchtext=%E4%B8%AD%E6%96%87">简体中文补全模组</a>,
             内容可能有误, 请以<a href="https://plasma4.github.io/FtHoF-Planner-v6/">原版</a>为准, 本网页因更习惯于母语而汉化, 不保证翻译质量!</br>
-        当前版本兼容Cookie Cliker 2.052
+            如果对翻译有异议请<a href="https://github.com/233dada/FtHoF-Planner-v6/issues">提交issue</a>, 请附带上原因, 如果是和游戏内文本不一致, 请确保你应用了<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2685716441&searchtext=%E4%B8%AD%E6%96%87">简体中文补全模组</a>并附带上游戏内截图<br><br>
+            当前版本兼容Cookie Cliker 2.052
         <br>
         <md-button class="md-raised md-primary" ng-click="collapse_interface(1)">历史版本消息</md-button></b></p>
         <div class="collapse-content" id="content-1">
@@ -295,7 +296,7 @@
         </md-checkbox>
 
         <md-checkbox ng-checked=true ng-model="skip_edifices" aria-label="Allow Spontaneous Edifice Skips">
-            跳过自发大厦(万丈高楼平地起)
+            跳过万丈高楼平地起
         </md-checkbox>
 
         <md-checkbox ng-model="change_icons" aria-label="Change Icons">
@@ -307,15 +308,15 @@
         <label>屏幕中的黄金+愤怒饼干数量<input type="number" ng-model="on_screen_cookies" min=0 max=10></label>
 
         <md-checkbox class="c2" ng-model="dragonflight" aria-label="Dragonflight Buff Active">
-            Dragonflight效果激活
+            飞龙在天激活
         </md-checkbox>
 
         <md-checkbox class="c2" ng-model="supremeintellect" aria-label="Supreme Intellect Aura Active">
-            Supreme Intellect Aura 激活
+            最高智慧光环激活
         </md-checkbox>
 
         <md-checkbox class="c2" ng-model="diminishineptitude" aria-label="Diminish Ineptitude Active">
-            Diminish Ineptitude 激活
+            临时抱佛脚激活
         </md-checkbox>
 
 
@@ -418,12 +419,12 @@
             <div flex-gt-sm="30" flex>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
-                        <span>魔法书之梦</span>
+                        <span>不成功，便成仁</span>
                     </div>
                 </md-toolbar>
                 <md-content>
                     <md-list flex>
-                        <md-subheader class="md-no-sticky">魔法书发烧梦的结果</md-subheader>
+                        <md-subheader class="md-no-sticky">不成功，便成仁的结果</md-subheader>
                         <md-list-item class="md-2-line" ng-init="hoverText = cookie_list[2].type" ng-mouseover="hoverText = cookie_list[2].hover" ng-click="hoverText = cookie_list[2].hover" ng-mouseleave="hoverText = cookie_list[2] ? cookie_list[2].type : 'Blank'" ng-repeat="cookie_list in displayCookies" ng-click="null">
                             <img ng-src='{{cookie_list[2].icon}}' class="md-avatar md-pixelated" alt="Golden Cookie"/>
                             <div class="md-list-item-text{{(cookie_list[2].hasBs || cookie_list[2].hasEf) ? ' highlightCombo' : cookie_list[2].type == 'Resurrect Abomination' || (cookie_list[2].type == 'Spontaneous Edifice' && !cookie_list[2].backfire) ? ' highlightSkip' : ''}}" layout="column">

@@ -225,18 +225,18 @@ app.controller('myCtrl', function ($scope) {
 			if ($scope.randomSeeds[i] + $scope.backfireChance < 1) {
 				arr.push(c[0]);
 				arr.push(c[1]);
-				if (c[2].type == "Elder Frenzy") { arr[0].type += " (EF)"; arr[0].noteworthy = true; }
-				if (c[3].type == "Elder Frenzy") { arr[1].type += " (EF)"; arr[1].noteworthy = true; }
-				if (c[2].type == "Free Sugar Lump") { arr[0].type += " (Lump)"; }
-				if (c[3].type == "Free Sugar Lump") { arr[1].type += " (Lump)"; }
+				if (c[2].type == "长者狂热") { arr[0].type += " (EF)"; arr[0].noteworthy = true; }
+				if (c[3].type == "长者狂热") { arr[1].type += " (EF)"; arr[1].noteworthy = true; }
+				if (c[2].type == "免费糖块") { arr[0].type += " (Lump)"; }
+				if (c[3].type == "免费糖块") { arr[1].type += " (Lump)"; }
 			}
 			else {
 				arr.push(c[2]);
 				arr.push(c[3]);
-				if (c[0].type == "Building Special") { arr[0].type += " (BS)"; arr[0].noteworthy = true; }
-				if (c[1].type == "Building Special") { arr[1].type += " (BS)"; arr[1].noteworthy = true; }
-				if (c[0].type == "Free Sugar Lump") { arr[0].type += " (Lump)"; }
-				if (c[1].type == "Free Sugar Lump") { arr[1].type += " (Lump)"; }
+				if (c[0].type == "建筑助力") { arr[0].type += " (BS)"; arr[0].noteworthy = true; }
+				if (c[1].type == "建筑助力") { arr[1].type += " (BS)"; arr[1].noteworthy = true; }
+				if (c[0].type == "免费糖块") { arr[0].type += " (Lump)"; }
+				if (c[1].type == "免费糖块") { arr[1].type += " (Lump)"; }
 			}
 			arr.push(gambler);
 			$scope.displayCookies.push(arr);
@@ -305,7 +305,7 @@ app.controller('myCtrl', function ($scope) {
 
 	function cookiesContainBuffs(include_ef, ...cookies) {
 		return cookies.some((cookie) => {
-			return cookie.type == 'Building Special' || (include_ef && cookie.type == 'Elder Frenzy');
+			return cookie.type == '建筑助力' || (include_ef && cookie.type == '长者狂热');
 		});
 	}
 
@@ -353,7 +353,7 @@ app.controller('myCtrl', function ($scope) {
 				gamblerSpell.innerCookie2 = check_cookies(spellsCast + 1, '', true, true);
 				gamblerSpell.icon = "img/img8.png";
 
-				gamblerSpell.hasBs = gamblerSpell.innerCookie1.type == 'Building Special' || gamblerSpell.innerCookie2.type == 'Building Special';
+				gamblerSpell.hasBs = gamblerSpell.innerCookie1.type == '建筑助力' || gamblerSpell.innerCookie2.type == '建筑助力';
 			}
 
 			//TODO: Do something with edifice to make it clear if it will fail or not. like this:
@@ -367,7 +367,7 @@ app.controller('myCtrl', function ($scope) {
 				gamblerSpell.innerCookie2 = check_cookies(spellsCast + 1, '', true, false);
 				gamblerSpell.icon = "img/img9.png";
 
-				gamblerSpell.hasEf = gamblerSpell.innerCookie1.type == 'Elder Frenzy' || gamblerSpell.innerCookie2.type == 'Elder Frenzy';
+				gamblerSpell.hasEf = gamblerSpell.innerCookie1.type == '长者狂热' || gamblerSpell.innerCookie2.type == '长者狂热';
 			}
 
 			//TODO: again, handle spontaneous edifice
@@ -392,27 +392,27 @@ app.controller('myCtrl', function ($scope) {
 			/**/
 
 			var choices = [];
-			choices.push('Frenzy', 'Lucky');
-			if (!$scope.dragonflight) choices.push('Click Frenzy');
-			if (Math.random() < 0.1) choices.push('Cookie Storm', 'Cookie Storm', 'Blab');
-			if (Math.random() < 0.25) choices.push('Building Special');
-			if (Math.random() < 0.15) choices = ['Cookie Storm Drop'];
-			if (Math.random() < 0.0001) choices.push('Free Sugar Lump');
+			choices.push('狂热', '好运气');
+			if (!$scope.dragonflight) choices.push('点击狂热');
+			if (Math.random() < 0.1) choices.push('饼干风暴', '饼干风暴', '一派胡言');
+			if (Math.random() < 0.25) choices.push('建筑助力');
+			if (Math.random() < 0.15) choices = ['掉落的饼干风暴'];
+			if (Math.random() < 0.0001) choices.push('免费糖块');
 			var cookie = {}
 			cookie.wrath = false
 			cookie.type = choose(choices);
-			cookie.icon = $scope.change_icons ? cookie.type === 'Cursed Finger' || cookie.type === 'Clot' || cookie.type === 'Cookie Storm' ? "img/img6.png" : cookie.type === 'Elder Frenzy' ? "img/img2.png" : cookie.type === 'Building Special' || cookie.type === 'Click Frenzy' ? "img/img3.png" : cookie.type === 'Frenzy' ? "img/img4.png" : "img/img5.png" : "img/GoldCookie.png";
-			if (cookie.type == 'Frenzy') cookie.description = "Gives x7 cookie production for 77 seconds.";
-			if (cookie.type == 'Lucky') cookie.description = "Gain 13 cookies, plus the lesser of 15% of bank or 15 minutes of production.";
-			if (cookie.type == 'Click Frenzy') cookie.description = "Gives x777 cookies per click for 13 seconds.";
-			if (cookie.type == 'Blab') cookie.description = "Does nothing but contains a funny message.";
-			if (cookie.type == 'Cookie Storm') cookie.description = "Golden cookies fill the screen, each granting you 1 to 7 minutes worth of cookies.";
-			if (cookie.type == 'Cookie Storm Drop') cookie.description = "Grants 1 to 7 minutes worth of production.";
-			if (cookie.type == 'Building Special') {
-				cookie.description = "Get a variable bonus to cookie production for 30 seconds.";
+			cookie.icon = $scope.change_icons ? cookie.type === '被诅咒的手指' || cookie.type === '凝块' || cookie.type === '饼干风暴' ? "img/img6.png" : cookie.type === '长者狂热' ? "img/img2.png" : cookie.type === '建筑助力' || cookie.type === '点击狂热' ? "img/img3.png" : cookie.type === '狂热' ? "img/img4.png" : "img/img5.png" : "img/GoldCookie.png";
+			if (cookie.type == '狂热') cookie.description = "饼干产量x7, 持续77秒";
+			if (cookie.type == '好运气') cookie.description = "获得13块饼干加上15分钟的饼干产量, 上限为你当前银行产出的15%";
+			if (cookie.type == '点击狂热') cookie.description = "点击力x777, 持续13秒";
+			if (cookie.type == '一派胡言') cookie.description = "除了一句俏皮话什么也不会发生";
+			if (cookie.type == '饼干风暴') cookie.description = "黄金饼干充满屏幕, 每个将会给予你1至7分钟的饼干产量";
+			if (cookie.type == '掉落的饼干风暴') cookie.description = "提供1至7分钟的饼干产量";
+			if (cookie.type == '建筑助力') {
+				cookie.description = "给予饼干产量一个可变的加成, 持续30秒";
 				cookie.noteworthy = true;
 			}
-			if (cookie.type == 'Free Sugar Lump') cookie.description = "Gives you a free sugar lump.";
+			if (cookie.type == '免费糖块') cookie.description = "免费给你一个糖块";
 			return cookie;
 		} else {
 			/* Random is called a few times in setting up the golden cookie */
@@ -425,32 +425,32 @@ app.controller('myCtrl', function ($scope) {
 			/**/
 
 			var choices = [];
-			choices.push('Clot', 'Ruin');
-			if (Math.random() < 0.1) choices.push('Cursed Finger', 'Elder Frenzy');
-			if (Math.random() < 0.003) choices.push('Free Sugar Lump');
-			if (Math.random() < 0.1) choices = ['Blab'];
+			choices.push('凝块', '破财');
+			if (Math.random() < 0.1) choices.push('被诅咒的手指', '长者狂热');
+			if (Math.random() < 0.003) choices.push('免费糖块');
+			if (Math.random() < 0.1) choices = ['一派胡言'];
 			var cookie = {}
 			cookie.wrath = true
 			cookie.type = choose(choices);
-			cookie.icon = $scope.change_icons ? cookie.type === 'Cursed Finger' || cookie.type === 'Clot' || cookie.type === 'Cookie Storm' ? "img/img6.png" : cookie.type === 'Elder Frenzy' ? "img/img2.png" : cookie.type === 'Building Special' || cookie.type === 'Click Frenzy' ? "img/img3.png" : cookie.type === 'Frenzy' ? "img/img4.png" : "img/img5.png" : "img/WrathCookie.png";
-			if (cookie.type == 'Clot') cookie.description = "Reduce production by 50% for 66 seconds.";
-			if (cookie.type == 'Ruin') cookie.description = "Lose 13 cookies plus the lesser of 5% of bank or 15 minutes of production.";
-			if (cookie.type == 'Cursed Finger') cookie.description = "Cookie production halted for 10 seconds, but each click is worth 10 seconds of production.";
-			if (cookie.type == 'Blab') cookie.description = "Does nothing but has a funny message.";
-			if (cookie.type == 'Elder Frenzy') {
-				cookie.description = "Gives x666 cookie production for 6 seconds.";
+			cookie.icon = $scope.change_icons ? cookie.type === '被诅咒的手指' || cookie.type === '凝块' || cookie.type === '饼干风暴' ? "img/img6.png" : cookie.type === '长者狂热' ? "img/img2.png" : cookie.type === '建筑助力' || cookie.type === '点击狂热' ? "img/img3.png" : cookie.type === '狂热' ? "img/img4.png" : "img/img5.png" : "img/WrathCookie.png";
+			if (cookie.type == '凝块') cookie.description = "减少50%的饼干产量, 持续66秒";
+			if (cookie.type == '破财') cookie.description = "损失13块饼干加上15分钟的饼干产量, 上限为你当前银行产出的5%";
+			if (cookie.type == '被诅咒的手指') cookie.description = "Cookie production halted for 10 seconds, but each click is worth 10 seconds of production.";
+			if (cookie.type == '一派胡言') cookie.description = "除了一句俏皮话以外什么也不会发生";
+			if (cookie.type == '长者狂热') {
+				cookie.description = "点击力x666, 持续6秒";
 				cookie.noteworthy = true;
 			}
-			if (cookie.type == 'Free Sugar Lump') cookie.description = "Gives you a free sugar lump.";
+			if (cookie.type == '免费糖块') cookie.description = "免费给你一个糖块";
 			return cookie;
 		}
 	}
 
 	$scope.spells = {
 		'conjure baked goods': {
-			name: 'Conjure Baked Goods',
+			name: '粒粒皆辛苦',
 			desc: 'Summon half an hour worth of your CpS, capped at 15% of your cookies owned.',
-			failDesc: 'Trigger a 15-minute clot and lose 15 minutes of CpS.',
+			failDesc: 'Trigger a 15-minute 凝块 and lose 15 minutes of CpS.',
 			icon: [21, 11],
 			costMin: 2,
 			costPercent: 0.4,
@@ -461,7 +461,7 @@ app.controller('myCtrl', function ($scope) {
 				Game.Popup('<div style="font-size:80%;">+' + Beautify(val) + ' cookie' + (val == 1 ? '' : 's') + '!</div>', Game.mouseX, Game.mouseY);
 			},
 			fail: function () {
-				var buff = Game.gainBuff('clot', 60 * 15, 0.5);
+				var buff = Game.gainBuff('凝块', 60 * 15, 0.5);
 				var val = Math.min(Game.cookies * 0.15, Game.cookiesPs * 60 * 15) + 13;
 				val = Math.min(Game.cookies, val);
 				Game.Spend(val);
@@ -470,7 +470,7 @@ app.controller('myCtrl', function ($scope) {
 			},
 		},
 		'hand of fate': {
-			name: 'Force the Hand of Fate',
+			name: '我命由我不由天 !',
 			desc: 'Summon a random golden cookie. Each existing golden cookie makes this spell +15% more likely to backfire.',
 			failDesc: 'Summon an unlucky wrath cookie.',
 			icon: [22, 11],
@@ -482,15 +482,15 @@ app.controller('myCtrl', function ($scope) {
 			win: function () {
 				var newShimmer = new Game.shimmer('golden', { noWrath: true });
 				var choices = [];
-				choices.push('frenzy', 'multiply cookies');
-				if (!Game.hasBuff('Dragonflight')) choices.push('click frenzy');
-				if (Math.random() < 0.1) choices.push('cookie storm', 'cookie storm', 'blab');
-				if (Game.BuildingsOwned >= 10 && Math.random() < 0.25) choices.push('building special');
-				//if (Math.random()<0.2) choices.push('clot','cursed finger','ruin cookies');
-				if (Math.random() < 0.15) choices = ['cookie storm drop'];
-				if (Math.random() < 0.0001) choices.push('free sugar lump');
+				choices.push('狂热', 'multiply cookies');
+				if (!Game.hasBuff('Dragonflight')) choices.push('点击狂热');
+				if (Math.random() < 0.1) choices.push('饼干风暴', '饼干风暴', '一派胡言');
+				if (Game.BuildingsOwned >= 10 && Math.random() < 0.25) choices.push('建筑助力');
+				//if (Math.random()<0.2) choices.push('凝块','cursed finger','ruin cookies');
+				if (Math.random() < 0.15) choices = ['掉落的饼干风暴'];
+				if (Math.random() < 0.0001) choices.push('免费糖块');
 				newShimmer.force = choose(choices);
-				if (newShimmer.force == 'cookie storm drop') {
+				if (newShimmer.force == '掉落的饼干风暴') {
 					newShimmer.sizeMult = Math.random() * 0.75 + 0.25;
 				}
 				Game.Popup('<div style="font-size:80%;">Promising fate!</div>', Game.mouseX, Game.mouseY);
@@ -498,16 +498,16 @@ app.controller('myCtrl', function ($scope) {
 			fail: function () {
 				var newShimmer = new Game.shimmer('golden', { wrath: true });
 				var choices = [];
-				choices.push('clot', 'ruin cookies');
-				if (Math.random() < 0.1) choices.push('cursed finger', 'blood frenzy');
-				if (Math.random() < 0.003) choices.push('free sugar lump');
-				if (Math.random() < 0.1) choices = ['blab'];
+				choices.push('凝块', '破财饼干');
+				if (Math.random() < 0.1) choices.push('被诅咒的手指', 'blood frenzy');
+				if (Math.random() < 0.003) choices.push('免费糖块');
+				if (Math.random() < 0.1) choices = ['一派胡言'];
 				newShimmer.force = choose(choices);
 				Game.Popup('<div style="font-size:80%;">Backfire!<br>Sinister fate!</div>', Game.mouseX, Game.mouseY);
 			},
 		},
 		'stretch time': {
-			name: 'Stretch Time',
+			name: '前往过去',
 			desc: 'All active buffs gain 10% more time (up to 5 more minutes).',
 			failDesc: 'All active buffs are shortened by 20% (up to 10 minutes shorter).',
 			icon: [23, 11],
@@ -545,7 +545,7 @@ app.controller('myCtrl', function ($scope) {
 			},
 		},
 		'spontaneous edifice': {
-			name: 'Spontaneous Edifice',
+			name: '万丈高楼平地起 !',
 			desc: 'The spell picks a random building you could afford if you had twice your current cookies, and gives it to you for free. The building selected must be under 400, and cannot be your most-built one (unless it is your only one).',
 			failDesc: 'Lose a random building.',
 			icon: [24, 11],
@@ -585,7 +585,7 @@ app.controller('myCtrl', function ($scope) {
 			},
 		},
 		'haggler\'s charm': {
-			name: 'Haggler\'s Charm',
+			name: '投机倒把',
 			desc: 'Upgrades are 2% cheaper for 1 minute.',
 			failDesc: 'Upgrades are 2% more expensive for an hour.<q>What\'s that spell? Loadsamoney!</q>',
 			icon: [25, 11],
@@ -603,7 +603,7 @@ app.controller('myCtrl', function ($scope) {
 			},
 		},
 		'summon crafty pixies': {
-			name: 'Summon Crafty Pixies',
+			name: '勾心斗角之势',
 			desc: 'Buildings are 2% cheaper for 1 minute.',
 			failDesc: 'Buildings are 2% more expensive for an hour.',
 			icon: [26, 11],
@@ -654,7 +654,7 @@ app.controller('myCtrl', function ($scope) {
 			},
 		},
 		'resurrect abomination': {
-			name: 'Resurrect Abomination',
+			name: '起来吧 !',
 			desc: 'Instantly summon a wrinkler if conditions are fulfilled.',
 			failDesc: 'Pop one of your wrinklers.',
 			icon: [28, 11],
@@ -678,7 +678,7 @@ app.controller('myCtrl', function ($scope) {
 			},
 		},
 		'diminish ineptitude': {
-			name: 'Diminish Ineptitude',
+			name: '临时抱佛脚',
 			desc: 'Spells backfire 10 times less for the next 5 minutes.',
 			failDesc: 'Spells backfire 5 times more for the next 10 minutes.',
 			icon: [29, 11],
