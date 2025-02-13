@@ -333,7 +333,7 @@ app.controller('myCtrl', function ($scope) {
 		var gfdSpell = choose(spells);
 
 		//simplifying the below cause this isn't patched yet afaict and i'll never be playing with diminished ineptitude backfire
-		var gfdBackfire = gfdSpell.name === "Force the Hand of Fate" ? Math.max(0.5, $scope.backfireChance) : 0.5; /*M.getFailChance(gfdSpell);
+		var gfdBackfire = gfdSpell.name === "我命由我不由天" ? Math.max(0.5, $scope.backfireChance) : 0.5; /*M.getFailChance(gfdSpell);
     
 		if(FortuneCookie.detectKUGamblerPatch()) gfdBackfire *= 2;
 		else gfdBackfire = Math.max(gfdBackfire, 0.5);*/
@@ -348,7 +348,7 @@ app.controller('myCtrl', function ($scope) {
 			gamblerSpell.icon = "img/img10.png";
 			gamblerSpell.backfire = false;
 
-			if (gfdSpell.name == "Force the Hand of Fate") {
+			if (gfdSpell.name == "我命由我不由天") {
 				gamblerSpell.innerCookie1 = check_cookies(spellsCast + 1, '', false, true);
 				gamblerSpell.innerCookie2 = check_cookies(spellsCast + 1, '', true, true);
 				gamblerSpell.icon = "img/img8.png";
@@ -362,7 +362,7 @@ app.controller('myCtrl', function ($scope) {
 			gamblerSpell.icon = "img/img11.png";
 			gamblerSpell.backfire = true;
 
-			if (gfdSpell.name == "Force the Hand of Fate") {
+			if (gfdSpell.name == "我命由我不由天") {
 				gamblerSpell.innerCookie1 = check_cookies(spellsCast + 1, '', false, false);
 				gamblerSpell.innerCookie2 = check_cookies(spellsCast + 1, '', true, false);
 				gamblerSpell.icon = "img/img9.png";
@@ -470,7 +470,7 @@ app.controller('myCtrl', function ($scope) {
 			},
 		},
 		'hand of fate': {
-			name: '我命由我不由天 !',
+			name: '我命由我不由天',
 			desc: 'Summon a random golden cookie. Each existing golden cookie makes this spell +15% more likely to backfire.',
 			failDesc: 'Summon an unlucky wrath cookie.',
 			icon: [22, 11],
